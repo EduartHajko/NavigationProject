@@ -5,7 +5,8 @@
       "commandVersion": "1.0",
       "serviceActions": {
         "navigation.api": "StartDebugging",
-        "administration.api": "StartDebugging"
+        "administration.api": "StartDebugging",
+        "yarpapigateway": "StartDebugging"
       }
     }
   }

@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Navigation.Application", "S
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{3E5F3542-78AE-4F6D-BF61-6E46F70D1939}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YarpApiGateway", "ApiGateways\YarpApiGateway\YarpApiGateway.csproj", "{416F6FC4-02F4-44D6-82A2-B3459C0A99DC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{3E5F3542-78AE-4F6D-BF61-6E46F70D1939}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E5F3542-78AE-4F6D-BF61-6E46F70D1939}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E5F3542-78AE-4F6D-BF61-6E46F70D1939}.Release|Any CPU.Build.0 = Release|Any CPU
+		{416F6FC4-02F4-44D6-82A2-B3459C0A99DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{416F6FC4-02F4-44D6-82A2-B3459C0A99DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{416F6FC4-02F4-44D6-82A2-B3459C0A99DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{416F6FC4-02F4-44D6-82A2-B3459C0A99DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,6 +87,7 @@ Global
 		{326B692A-3C3E-45ED-A67A-3286D542E76E} = {2DAF3FFC-3384-408F-BBF6-E72DDC811E15}
 		{8D907202-9A39-42C2-AD06-011F3F2D977D} = {2DAF3FFC-3384-408F-BBF6-E72DDC811E15}
 		{1FFFCC24-1637-4416-9078-CD22D443D7E2} = {2DAF3FFC-3384-408F-BBF6-E72DDC811E15}
+		{416F6FC4-02F4-44D6-82A2-B3459C0A99DC} = {973CAED5-337D-4D2F-86F4-D77C9EF36F14}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B9336830-F083-4A65-816A-E2C241E67106}
