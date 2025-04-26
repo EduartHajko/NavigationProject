@@ -1,0 +1,19 @@
+version: '3.4'
+
+services:
+  navigation.api:
+    build:
+      context: .
+      dockerfile: Services/Navigation/Navigation.Api/Dockerfile
+
+  administration.api:
+    build:
+      context: .
+      dockerfile: Services/Administration/Administration.Api/Dockerfile
+
+  navigation.db:
+    image: mcr.microsoft.com/mssql/server
+
+  messagebroker:
+    image: rabbitmq:management
+

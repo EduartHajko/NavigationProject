@@ -19,13 +19,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildingBlocks", "BuildingB
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildingBlocks.Messaging", "BuildingBlocks\BuildingBlocks.Messaging\BuildingBlocks.Messaging.csproj", "{A2C2D9E0-B85F-4223-BE0E-537E574699AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Navigation.Api", "Services\Navigation\Navigation.Api\Navigation.Api.csproj", "{DCB5B81E-1F14-49F4-8D00-1BBDE5E59A6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Navigation.Api", "Services\Navigation\Navigation.Api\Navigation.Api.csproj", "{DCB5B81E-1F14-49F4-8D00-1BBDE5E59A6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Navigation.Domain", "Services\Navigation\Navigation.Domain\Navigation.Domain.csproj", "{326B692A-3C3E-45ED-A67A-3286D542E76E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Navigation.Domain", "Services\Navigation\Navigation.Domain\Navigation.Domain.csproj", "{326B692A-3C3E-45ED-A67A-3286D542E76E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Navigation.Infrastructure", "Services\Navigation\Navigation.Infrastructure\Navigation.Infrastructure.csproj", "{8D907202-9A39-42C2-AD06-011F3F2D977D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Navigation.Infrastructure", "Services\Navigation\Navigation.Infrastructure\Navigation.Infrastructure.csproj", "{8D907202-9A39-42C2-AD06-011F3F2D977D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Navigation.Application", "Services\Navigation\Navigation.Application\Navigation.Application.csproj", "{1FFFCC24-1637-4416-9078-CD22D443D7E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Navigation.Application", "Services\Navigation\Navigation.Application\Navigation.Application.csproj", "{1FFFCC24-1637-4416-9078-CD22D443D7E2}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{3E5F3542-78AE-4F6D-BF61-6E46F70D1939}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,10 @@ Global
 		{1FFFCC24-1637-4416-9078-CD22D443D7E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1FFFCC24-1637-4416-9078-CD22D443D7E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1FFFCC24-1637-4416-9078-CD22D443D7E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E5F3542-78AE-4F6D-BF61-6E46F70D1939}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E5F3542-78AE-4F6D-BF61-6E46F70D1939}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E5F3542-78AE-4F6D-BF61-6E46F70D1939}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E5F3542-78AE-4F6D-BF61-6E46F70D1939}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
