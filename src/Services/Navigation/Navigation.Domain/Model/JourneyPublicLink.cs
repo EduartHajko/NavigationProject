@@ -20,6 +20,7 @@ namespace Navigation.Domain.Model
             public DateTime? RevokedAt { get; private set; }
             public JourneyPublicLink(JourneyId journeyId, string link)
             {
+                Id = JourneyPublicLinkId.Of(Guid.NewGuid());
                 JourneyId = journeyId ?? throw new ArgumentNullException(nameof(journeyId));
                 Link = link ?? throw new ArgumentNullException(nameof(link));
                 CreatedAt = DateTime.UtcNow;

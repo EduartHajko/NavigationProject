@@ -21,6 +21,7 @@ namespace Navigation.Domain.Model
 
             public JourneyShare(JourneyId journeyId, Guid sharedWithUserId)
             {
+                Id = JourneyShareId.Of(Guid.NewGuid());
                 JourneyId = journeyId ?? throw new ArgumentNullException(nameof(journeyId));
                 SharedWithUserId = sharedWithUserId == Guid.Empty ? throw new ArgumentException("User ID cannot be empty", nameof(sharedWithUserId)) : sharedWithUserId;
                 SharedAt = DateTime.UtcNow;
