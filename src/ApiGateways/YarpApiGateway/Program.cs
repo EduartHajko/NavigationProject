@@ -1,22 +1,26 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Authentication
 builder.Services.AddAuthentication(options =>
 {
-    options.DefaultScheme = "Cookies";
-    options.DefaultChallengeScheme = "oidc";
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
 })
-.AddCookie("Cookies", options =>
+.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
 {
     options.Cookie.HttpOnly = true;
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
     options.Cookie.SameSite = SameSiteMode.Lax;
+    options.AccessDeniedPath = "/accessdenied";
 })
-.AddOpenIdConnect("oidc", options =>
+.AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
 {
     options.Authority = "https://accounts.google.com";
     options.ClientId = "810781142200-dq66urmgsov8lfn695s9u2f9bmcp5e5r.apps.googleusercontent.com";
@@ -34,8 +38,8 @@ builder.Services.AddAuthentication(options =>
 
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        NameClaimType = "name",
-        RoleClaimType = "role"
+        NameClaimType = ClaimTypes.Name, 
+        RoleClaimType = ClaimTypes.Role  
     };
 
     options.Events = new OpenIdConnectEvents
@@ -45,11 +49,13 @@ builder.Services.AddAuthentication(options =>
             var identity = (ClaimsIdentity)context.Principal.Identity;
             var email = identity.FindFirst(ClaimTypes.Email)?.Value;
 
+            Console.WriteLine($"User logged in: {email}");
+
             if (!string.IsNullOrEmpty(email))
             {
                 if (email.Equals("eduarthajko1992@gmail.com", StringComparison.OrdinalIgnoreCase))
                 {
-                    identity.AddClaim(new Claim(ClaimTypes.Role, "Admin"));
+                    identity.AddClaim(new Claim(ClaimTypes.Role, "Admin")); 
                 }
             }
 
@@ -57,7 +63,6 @@ builder.Services.AddAuthentication(options =>
         }
     };
 });
-
 
 // Authorization
 builder.Services.AddAuthorization(options =>
@@ -69,8 +74,7 @@ builder.Services.AddAuthorization(options =>
 
     options.AddPolicy("RequireAdmin", policy =>
     {
-        policy.RequireAuthenticatedUser();
-        policy.RequireRole("Admin");
+        policy.RequireRole("Admin"); 
     });
 });
 
@@ -90,10 +94,35 @@ builder.Services.AddRateLimiter(rateLimiterOptions =>
 
 var app = builder.Build();
 
-// Pipeline
+// Middleware
 app.UseRateLimiter();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapReverseProxy();
+// Routes
+app.MapGet("/", () => "Hello World! Go to /admin to test admin area.");
+
+app.MapGet("/admin", (ClaimsPrincipal user) =>
+{
+    var email = user.FindFirst(ClaimTypes.Email)?.Value;
+    return $"Welcome Admin! Your email is {email}";
+}).RequireAuthorization("RequireAdmin");
+
+app.MapGet("/accessdenied", () => Results.Content(
+    "<h1>Access Denied</h1><p>You do not have permission to access this page.</p>",
+    "text/html"
+));
+
+app.MapGet("/claims", (ClaimsPrincipal user) =>
+{
+    var claims = user.Claims.Select(c => $"{c.Type}: {c.Value}");
+    return Results.Content(string.Join("<br>", claims), "text/html");
+}).RequireAuthorization();
+
+app.MapGet("/logout", async (HttpContext context) =>
+{
+    await context.SignOutAsync();
+    return Results.Redirect("/");
+});
 
 app.Run();
