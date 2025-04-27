@@ -1,6 +1,7 @@
 using Navigation.Api;
 using Navigation.Application;
 using Navigation.Infrastructure;
+using Navigation.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,5 +15,8 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.UseApiServices();
-
+if (app.Environment.IsDevelopment())
+{
+    await app.InitialiseDatabaseAsync();
+}
 app.Run();
