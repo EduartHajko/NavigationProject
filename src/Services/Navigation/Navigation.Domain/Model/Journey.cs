@@ -49,7 +49,10 @@ namespace Navigation.Domain.Model
             CreatedAt = DateTime.UtcNow;
             DailyGoalTriggered = false;
         }
-
+        public void Delete(Journey journy)
+        {
+            AddDomainEvent(new JourneyDeletedEvent(journy));
+        }
         public static Journey Create(
             JourneyId id,
             Guid userId,

@@ -15,7 +15,6 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.2" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="Journy\EventHandlers\Domain\" />
 	  <Folder Include="Journy\EventHandlers\Integration\" />
 	</ItemGroup>
 </Project>
