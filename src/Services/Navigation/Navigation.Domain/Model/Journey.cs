@@ -49,9 +49,9 @@ namespace Navigation.Domain.Model
             CreatedAt = DateTime.UtcNow;
             DailyGoalTriggered = false;
         }
-        public void Delete(Journey journy)
+        public void Delete()
         {
-            AddDomainEvent(new JourneyDeletedEvent(journy));
+            AddDomainEvent(new JourneyDeletedEvent(Id, UserId));
         }
         public static Journey Create(
             JourneyId id,
@@ -154,6 +154,23 @@ namespace Navigation.Domain.Model
                 publicLink.Revoke();
                 LastModified = DateTime.UtcNow;
                 AddDomainEvent(new JourneyPublicShareRevokedEvent(Id, UserId, link));
+            }
+        }
+        private readonly HashSet<Guid> _favoritedBy = new(); 
+
+        public void MarkAsFavorite(Guid userId)
+        {
+            if (_favoritedBy.Add(userId))
+            {
+                AddDomainEvent(new JourneyFavoritedEvent(Id, userId, DateTime.UtcNow));
+            }
+        }
+
+        public void UnmarkFavorite(Guid userId)
+        {
+            if (_favoritedBy.Remove(userId))
+            {
+                AddDomainEvent(new JourneyUnfavoritedEvent(Id, userId, DateTime.UtcNow));
             }
         }
     }

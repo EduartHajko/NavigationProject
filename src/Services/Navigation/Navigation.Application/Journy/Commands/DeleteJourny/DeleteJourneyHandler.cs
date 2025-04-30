@@ -22,7 +22,7 @@ namespace Navigation.Application.Journy.Commands.DeleteJourny
             {
                 throw new Exception("journey not found to delete  with id :" +command.JourneyId);
             }
-
+            journey.Delete(); 
             dbContext.Journeys.Remove(journey);
             await dbContext.SaveChangesAsync(cancellationToken);
 

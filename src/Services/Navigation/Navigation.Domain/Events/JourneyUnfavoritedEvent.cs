@@ -1,5 +1,4 @@
 ﻿using Navigation.Domain.Abstractions;
-using Navigation.Domain.Model;
 using Navigation.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
@@ -9,5 +8,6 @@ using System.Threading.Tasks;
 
 namespace Navigation.Domain.Events
 {
-    public record JourneyDeletedEvent(JourneyId JourneyId, Guid UserId) : IDomainEvent;
+    public record JourneyUnfavoritedEvent(JourneyId JourneyId, Guid UserId, DateTime Timestamp) : IDomainEvent;
+
 }
