@@ -1,21 +1,16 @@
 ﻿using MediatR;
-using Microsoft.Extensions.Logging;
+using Navigation.Application.Notifications;
 using Navigation.Domain.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Navigation.Application.Journy.EventHandlers.Domain
 {
-    public class JourneyDeletedEventHandler(ILogger<JourneyDeletedEventHandler> logger)
-      : INotificationHandler<JourneyDeletedEvent>
+ 
+    public class JourneyDeletedEventHandler(IJourneyNotificationService notifier)
+   : INotificationHandler<JourneyDeletedEvent>
     {
         public Task Handle(JourneyDeletedEvent notification, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Domain Event handled: {DomainEvent}", notification.GetType().Name);
-            return Task.CompletedTask;
+            return notifier.NotifyJourneyDeletedAsync(notification.JourneyId);
         }
     }
 }

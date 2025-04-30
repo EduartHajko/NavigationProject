@@ -2,7 +2,9 @@
 using Carter;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Configuration;
+using Navigation.Api.Hubs;
+using Navigation.Api.NotificationService;
+using Navigation.Application.Notifications;
 
 namespace Navigation.Api
 {
@@ -11,7 +13,8 @@ namespace Navigation.Api
         public static IServiceCollection AddApiServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddCarter();
-
+            services.AddSignalR();//Signal R
+            services.AddScoped<IJourneyNotificationService, JourneyNotificationService>();
             services.AddExceptionHandler<CustomExceptionHandler>();
             services.AddHealthChecks()
                 .AddSqlServer(configuration.GetConnectionString("Database")!);
@@ -22,7 +25,7 @@ namespace Navigation.Api
         public static WebApplication UseApiServices(this WebApplication app)
         {
             app.MapCarter();
-
+            app.MapHub<JourneyHub>("/journeyhub");
             app.UseExceptionHandler(options => { });
             app.UseHealthChecks("/health",
                 new HealthCheckOptions

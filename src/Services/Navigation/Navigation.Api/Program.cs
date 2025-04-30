@@ -1,5 +1,7 @@
 using Navigation.Api;
+using Navigation.Api.NotificationService;
 using Navigation.Application;
+using Navigation.Application.Notifications;
 using Navigation.Infrastructure;
 using Navigation.Infrastructure.Extensions;
 

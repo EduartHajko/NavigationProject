@@ -1,5 +1,7 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
+using Navigation.Application.Notifications;
 using Navigation.Domain.Events;
 using System;
 using System.Collections.Generic;
@@ -9,13 +11,12 @@ using System.Threading.Tasks;
 
 namespace Navigation.Application.Journy.EventHandlers.Domain
 {
-    public class JourneyUpdatedEventHandler(ILogger<JourneyUpdatedEventHandler> logger)
-   : INotificationHandler<JourneyUpdatedEvent>
+    public class JourneyUpdatedEventHandler(IJourneyNotificationService notifier)
+       : INotificationHandler<JourneyUpdatedEvent>
     {
         public Task Handle(JourneyUpdatedEvent notification, CancellationToken cancellationToken)
         {
-            logger.LogInformation("Domain Event handled: {DomainEvent}", notification.GetType().Name);
-            return Task.CompletedTask;
+            return notifier.NotifyJourneyUpdatedAsync(notification.Journey.Id.Value);
         }
     }
 }
