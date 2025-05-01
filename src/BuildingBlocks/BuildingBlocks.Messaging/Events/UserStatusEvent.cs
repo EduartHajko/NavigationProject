@@ -1,13 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace BuildingBlocks.Messaging.Events
 {
-    public record UserStatusEvent: IntegrationEvent
+    public enum UserStatus
     {
-        public Guid UserId { get; set; } = default!;
+        Active,
+        Suspended,
+        Deactivated
+    }
+
+    public record UserStatusEvent : IntegrationEvent
+    {
+        public Guid UserId { get; init; }
+        public UserStatus Status { get; init; }
+
+        public UserStatusEvent(Guid userId, UserStatus status)
+        {
+            UserId = userId;
+            Status = status;
+        }
     }
 }

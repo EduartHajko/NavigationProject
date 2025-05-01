@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace BuildingBlocks.Messaging.Events
 {
-    public record GetMonthlyStatisticsEvent: IntegrationEvent
-    {
-    }
+    public record GetMonthlyStatisticsEvent(
+        int Page,
+        int PageSize,
+        string? OrderBy = null
+    ) : IntegrationEvent;
 }

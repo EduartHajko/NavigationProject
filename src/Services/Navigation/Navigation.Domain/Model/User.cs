@@ -1,20 +1,16 @@
 ﻿using Navigation.Domain.Abstractions;
 using Navigation.Domain.Enums;
+using Navigation.Domain.Events;
 using Navigation.Domain.ValueObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Navigation.Domain.Model
 {
     /// <summary>
     /// Represents a user in the system
     /// </summary>
-    public class User : Entity<UserId>
+    public class User : Aggregate<UserId>
     {
-
+       
         private User(UserId id, string email, string displayName, UserStatus status)
         {
             if (string.IsNullOrWhiteSpace(email))
@@ -41,7 +37,12 @@ namespace Navigation.Domain.Model
         {
             return new User(id, email, displayName, status);
         }
-
+        public void SetStatus(UserStatus status)
+        {
+            Status = status;
+            LastModified = DateTime.UtcNow;
+            AddDomainEvent(new UserStatusChangedEvent(Id, status, DateTime.UtcNow));
+        }
         /// <summary>
         /// Gets the user email
         /// </summary>
