@@ -1,0 +1,600 @@
+{
+	"info": {
+		"_postman_id": "1d165324-f768-4a16-9a8a-23aa1f65c374",
+		"name": "Navigation Project",
+		"description": "API collection for the Navigation Project microservices",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40816766"
+	},
+	"item": [
+		{
+			"name": "Administration Service",
+			"item": [
+				{
+					"name": "Get Monthly Distance Statistics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiGateway}}/administration-service/admin/statistics/monthly-distance?Page=1&PageSize=10",
+							"host": [
+								"{{apiGateway}}"
+							],
+							"path": [
+								"administration-service",
+								"admin",
+								"statistics",
+								"monthly-distance"
+							],
+							"query": [
+								{
+									"key": "Page",
+									"value": "1"
+								},
+								{
+									"key": "PageSize",
+									"value": "10"
+								},
+								{
+									"key": "OrderBy",
+									"value": "TotalDistanceKm",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Retrieves total distance travelled per user per calendar month for admin analysis."
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Status",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"Status\": \"Active\"\n}"
+						},
+						"url": {
+							"raw": "{{apiGateway}}/administration-service/admin/users/{{userId}}/status",
+							"host": [
+								"{{apiGateway}}"
+							],
+							"path": [
+								"administration-service",
+								"admin",
+								"users",
+								"{{userId}}",
+								"status"
+							]
+						},
+						"description": "Allows admins to change a user's account status (Active, Suspended, or Deactivated)."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Admin Journeys",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiGateway}}/administration-service/admin/journeys?Page=1&PageSize=10",
+							"host": [
+								"{{apiGateway}}"
+							],
+							"path": [
+								"administration-service",
+								"admin",
+								"journeys"
+							],
+							"query": [
+								{
+									"key": "UserId",
+									"value": "{{userId}}",
+									"disabled": true
+								},
+								{
+									"key": "TransportType",
+									"value": "Car",
+									"disabled": true
+								},
+								{
+									"key": "StartDateFrom",
+									"value": "2025-01-01T00:00:00",
+									"disabled": true
+								},
+								{
+									"key": "StartDateTo",
+									"value": "2025-05-01T00:00:00",
+									"disabled": true
+								},
+								{
+									"key": "ArrivalDateFrom",
+									"value": "2025-01-01T00:00:00",
+									"disabled": true
+								},
+								{
+									"key": "ArrivalDateTo",
+									"value": "2025-05-01T00:00:00",
+									"disabled": true
+								},
+								{
+									"key": "MinDistance",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "MaxDistance",
+									"value": "100",
+									"disabled": true
+								},
+								{
+									"key": "Page",
+									"value": "1"
+								},
+								{
+									"key": "PageSize",
+									"value": "10"
+								},
+								{
+									"key": "OrderBy",
+									"value": "StartTime",
+									"disabled": true
+								},
+								{
+									"key": "Direction",
+									"value": "desc",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Query journeys with filtering, pagination, and sorting for admins."
+					},
+					"response": []
+				}
+			],
+			"description": "Administration service endpoints"
+		},
+		{
+			"name": "Navigation Service",
+			"item": [
+				{
+					"name": "Create Journey",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"JourneyDto\": {\n        \"Id\": \"{{$guid}}\",\n        \"UserId\": \"{{userId}}\",\n        \"StartLocation\": {\n            \"Latitude\": 41.3275,\n            \"Longitude\": 19.8187,\n            \"Name\": \"Tirana\"\n        },\n        \"EndLocation\": {\n            \"Latitude\": 41.1141,\n            \"Longitude\": 20.0822,\n            \"Name\": \"Elbasan\"\n        },\n        \"StartTime\": \"2025-05-01T08:00:00\",\n        \"EndTime\": \"2025-05-01T09:30:00\",\n        \"TransportType\": \"Car\",\n        \"DistanceInKilometers\": 35.5,\n        \"DailyGoalTriggered\": false\n    }\n}"
+						},
+						"url": {
+							"raw": "{{apiGateway}}/navigation-service/journeys",
+							"host": [
+								"{{apiGateway}}"
+							],
+							"path": [
+								"navigation-service",
+								"journeys"
+							]
+						},
+						"description": "Creates a new journey with provided details."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Journey",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"JourneyDto\": {\n        \"Id\": \"{{journeyId}}\",\n        \"UserId\": \"{{userId}}\",\n        \"StartLocation\": {\n            \"Latitude\": 41.3275,\n            \"Longitude\": 19.8187,\n            \"Name\": \"Tirana\"\n        },\n        \"EndLocation\": {\n            \"Latitude\": 41.1141,\n            \"Longitude\": 20.0822,\n            \"Name\": \"Elbasan\"\n        },\n        \"StartTime\": \"2025-05-01T08:00:00\",\n        \"EndTime\": \"2025-05-01T09:30:00\",\n        \"TransportType\": \"Car\",\n        \"DistanceInKilometers\": 35.5,\n        \"DailyGoalTriggered\": true\n    }\n}"
+						},
+						"url": {
+							"raw": "{{apiGateway}}/navigation-service/journeys",
+							"host": [
+								"{{apiGateway}}"
+							],
+							"path": [
+								"navigation-service",
+								"journeys"
+							]
+						},
+						"description": "Updates an existing journey."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Journey",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{apiGateway}}/navigation-service/journeys/{{journeyId}}",
+							"host": [
+								"{{apiGateway}}"
+							],
+							"path": [
+								"navigation-service",
+								"journeys",
+								"{{journeyId}}"
+							]
+						},
+						"description": "Deletes a journey by ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Journeys",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiGateway}}/navigation-service/journeys?Page=1&PageSize=10",
+							"host": [
+								"{{apiGateway}}"
+							],
+							"path": [
+								"navigation-service",
+								"journeys"
+							],
+							"query": [
+								{
+									"key": "Page",
+									"value": "1"
+								},
+								{
+									"key": "PageSize",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Retrieves journeys in paginated format."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Authenticated",
+					"request": {
+						"auth": {
+							"type": "jwt",
+							"jwt": [
+								{
+									"key": "algorithm",
+									"value": "HS256",
+									"type": "string"
+								},
+								{
+									"key": "isSecretBase64Encoded",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "payload",
+									"value": "{}",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "queryParamKey",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "header",
+									"value": "{}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{apiGateway}}/login?username=admin&password=pass&role=user",
+							"host": [
+								"{{apiGateway}}"
+							],
+							"path": [
+								"login"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "admin"
+								},
+								{
+									"key": "password",
+									"value": "pass"
+								},
+								{
+									"key": "role",
+									"value": "user"
+								}
+							]
+						},
+						"description": "Retrieves journeys in paginated format."
+					},
+					"response": []
+				},
+				{
+					"name": "Favorite Journey",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"UserId\": \"{{userId}}\"\n}"
+						},
+						"url": {
+							"raw": "{{apiGateway}}/navigation-service/journeys/{{journeyId}}/favorite",
+							"host": [
+								"{{apiGateway}}"
+							],
+							"path": [
+								"navigation-service",
+								"journeys",
+								"{{journeyId}}",
+								"favorite"
+							]
+						},
+						"description": "Marks a journey as favorite for the user."
+					},
+					"response": []
+				},
+				{
+					"name": "Unfavorite Journey",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{apiGateway}}/navigation-service/journeys/{{journeyId}}/favorite?userId={{userId}}",
+							"host": [
+								"{{apiGateway}}"
+							],
+							"path": [
+								"navigation-service",
+								"journeys",
+								"{{journeyId}}",
+								"favorite"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "{{userId}}"
+								}
+							]
+						},
+						"description": "Removes a journey from favorites for the user."
+					},
+					"response": []
+				},
+				{
+					"name": "Share Journey",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"UserIds\": [\n        \"{{friendUserId1}}\",\n        \"{{friendUserId2}}\"\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{apiGateway}}/navigation-service/journeys/{{journeyId}}/share",
+							"host": [
+								"{{apiGateway}}"
+							],
+							"path": [
+								"navigation-service",
+								"journeys",
+								"{{journeyId}}",
+								"share"
+							]
+						},
+						"description": "Shares a journey with a list of users."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Public Link",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{apiGateway}}/navigation-service/journeys/{{journeyId}}/public-link",
+							"host": [
+								"{{apiGateway}}"
+							],
+							"path": [
+								"navigation-service",
+								"journeys",
+								"{{journeyId}}",
+								"public-link"
+							]
+						},
+						"description": "Generates a public link to access the journey."
+					},
+					"response": []
+				},
+				{
+					"name": "Revoke Public Link",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"Link\": \"{{publicLink}}\"\n}"
+						},
+						"url": {
+							"raw": "{{apiGateway}}/navigation-service/journeys/{{journeyId}}/public-link/revoke",
+							"host": [
+								"{{apiGateway}}"
+							],
+							"path": [
+								"navigation-service",
+								"journeys",
+								"{{journeyId}}",
+								"public-link",
+								"revoke"
+							]
+						},
+						"description": "Revokes a previously shared public journey link."
+					},
+					"response": []
+				}
+			],
+			"description": "Navigation service endpoints",
+			"auth": {
+				"type": "oauth2",
+				"oauth2": [
+					{
+						"key": "useBrowser",
+						"value": true,
+						"type": "boolean"
+					},
+					{
+						"key": "clientSecret",
+						"value": "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",
+						"type": "string"
+					},
+					{
+						"key": "clientId",
+						"value": "810781142200-dq66urmgsov8lfn695s9u2f9bmcp5e5r.apps.googleusercontent.com",
+						"type": "string"
+					},
+					{
+						"key": "scope",
+						"value": "openid profile email",
+						"type": "string"
+					},
+					{
+						"key": "accessTokenUrl",
+						"value": "https://oauth2.googleapis.com/token",
+						"type": "string"
+					},
+					{
+						"key": "authUrl",
+						"value": "https://accounts.google.com/o/oauth2/auth",
+						"type": "string"
+					},
+					{
+						"key": "redirect_uri",
+						"value": "https://oauth.pstmn.io/v1/callback",
+						"type": "string"
+					},
+					{
+						"key": "addTokenTo",
+						"value": "header",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "userId",
+			"value": "00000000-0000-0000-0000-000000000001",
+			"type": "string"
+		},
+		{
+			"key": "journeyId",
+			"value": "00000000-0000-0000-0000-000000000001",
+			"type": "string"
+		},
+		{
+			"key": "friendUserId1",
+			"value": "00000000-0000-0000-0000-000000000002",
+			"type": "string"
+		},
+		{
+			"key": "friendUserId2",
+			"value": "00000000-0000-0000-0000-000000000003",
+			"type": "string"
+		},
+		{
+			"key": "publicLink",
+			"value": "sample-public-link-token",
+			"type": "string"
+		}
+	]
+}
