@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using YarpApiGateway.Telemetry;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +43,9 @@ builder.Services.AddRateLimiter(rateLimiterOptions =>
         options.PermitLimit = 5;
     });
 });
+
+// Add OpenTelemetry services
+builder.Services.AddOpenTelemetryServices(builder.Configuration);
 var app = builder.Build();
 // Login endpoint - issues a bearer token for local testing
 app.MapPost("/login", (string username, string password, string role="user") =>

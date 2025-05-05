@@ -4,6 +4,7 @@ using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Navigation.Api.Hubs;
 using Navigation.Api.NotificationService;
+using Navigation.Api.Telemetry;
 using Navigation.Application.Notifications;
 
 namespace Navigation.Api
@@ -18,6 +19,9 @@ namespace Navigation.Api
             services.AddExceptionHandler<CustomExceptionHandler>();
             services.AddHealthChecks()
                 .AddSqlServer(configuration.GetConnectionString("Database")!);
+            
+            // Add OpenTelemetry services
+            services.AddOpenTelemetryServices(configuration);
 
             return services;
         }

@@ -6,6 +6,7 @@ services:
     depends_on:
       - navigation.db
       - messagebroker
+      - jaeger
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
@@ -15,6 +16,8 @@ services:
       - MessageBroker__UserName=guest
       - MessageBroker__Password=guest
       - FeatureManagement__OrderFullfilment=false
+      - Jaeger__Host=jaeger
+      - Jaeger__Port=6831
     ports:
        - "6003:8080"
        - "6063:8081"
@@ -27,6 +30,7 @@ services:
     depends_on:
       - navigation.db
       - messagebroker
+      - jaeger
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
@@ -35,6 +39,8 @@ services:
       - MessageBroker__Host=amqp://ecommerce-mq:5672
       - MessageBroker__UserName=guest
       - MessageBroker__Password=guest
+      - Jaeger__Host=jaeger
+      - Jaeger__Port=6831
     ports:
       - "6001:8080"
       - "6061:8081"
@@ -64,15 +70,31 @@ services:
 
   yarpapigateway:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=8081
+      - Jaeger__Host=jaeger
+      - Jaeger__Port=6831
     depends_on:
       - administration.api
       - navigation.api
+      - jaeger
     ports:
       - "6004:8080"
-      - "6064:8081"
+
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
+  jaeger:
+    container_name: jaeger
+    ports:
+      - "5775:5775/udp"
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+      - "5778:5778"
+      - "16686:16686"
+      - "14268:14268"
+      - "14250:14250"
+      - "9411:9411"
+    environment:
+      - COLLECTOR_ZIPKIN_HOST_PORT=9411

@@ -24,3 +24,5 @@ services:
       context: .
       dockerfile: ApiGateways/YarpApiGateway/Dockerfile
 
+  jaeger:
+    image: jaegertracing/all-in-one:latest

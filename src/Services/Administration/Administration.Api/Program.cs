@@ -4,6 +4,7 @@ using Carter;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using BuildingBlocks.Messaging.MassTransit;
 using HealthChecks.UI.Client;
+using Administration.Api.Telemetry;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,9 @@ builder.Services.AddMessageBroker(builder.Configuration);
 
 //Cross-Cutting Services
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
+// Add OpenTelemetry services
+builder.Services.AddOpenTelemetryServices(builder.Configuration);
 
 var app = builder.Build();
 
