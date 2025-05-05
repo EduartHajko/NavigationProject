@@ -102,6 +102,8 @@ The project is containerized using Docker and can be run using Docker Compose.
    - Navigation API: http://localhost:6003
    - Administration API: http://localhost:6001
    - RabbitMQ Management: http://localhost:15672 (username: guest, password: guest)
+  
+     
 4  - Import the 3 json files to postman the collection and the two env files so you can test in docker and in localy by seting as startup project the api gateway and the two other microservices
    - . In docker only set docker compose as startup and select docker env in postman.
 
